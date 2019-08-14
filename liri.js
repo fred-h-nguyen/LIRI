@@ -21,6 +21,12 @@ function concert(artist) {
 
             var data = response.data
 
+            //Name of the venue
+
+            //Venue location
+
+            //Date of the Event (use moment to format this as "MM/DD/YYYY")
+
 
 
         })
