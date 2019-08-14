@@ -1,4 +1,5 @@
-// all required packages
+// All REQUIRED PACKAGES
+//=====================================================
 //axios used for omdb and bands api
 var axios = require('axios');
 
@@ -11,19 +12,26 @@ var spotify = new Spotify(keys.spotify);
 //moment used to get time for concerts
 var moment = require('moment');
 
-//
+//Geocoder for address
 var NodeGeocoder = require('node-geocoder');
-
 var options = {
     provider: "mapquest",
     apiKey: "VcPyAXvCwBFq4OMnuzJgcZCVdX3GVsGg"
 };
-
 var geocoder = NodeGeocoder(options);
 
 // process.argv to get commands
 var args = process.argv;
 
+//file system node
+
+var fs = require('fs')
+
+
+//FUNCTIONS
+//============================================
+
+//Concert-this
 function concert(artist) {
 
     axios.get('https://rest.bandsintown.com/artists/' + artist + '/events?app_id=codingbootcamp')
@@ -46,7 +54,7 @@ function concert(artist) {
 
 
                 //Name of the venue
-
+                //console.log(data[0].venue)
                 console.log('The concert is playing at ' + data[0].venue.name)
 
                 //Venue location
@@ -65,6 +73,7 @@ function concert(artist) {
 
 }
 
+//movie-this
 function movieInfo(movieTitle) {
     if (!movieTitle) {
         axios.get('http://www.omdbapi.com/?t=Mr.+Nobody&y=&plot=short&apikey=trilogy')
@@ -80,7 +89,10 @@ function movieInfo(movieTitle) {
                 console.log('Actors: ' + data.Actors)
             })
     } else {
-        axios.get('http://www.omdbapi.com/?t=' + movieTitle + '&y=&plot=short&apikey=trilogy')
+
+        var newMovieTitle = movieTitle.split(' ').join('+')
+
+        axios.get('http://www.omdbapi.com/?t=' + newMovieTitle + '&y=&plot=short&apikey=trilogy')
             .then(function (response) {
                 var data = response.data
                 console.log('Movie: ' + data.Title);
@@ -96,18 +108,63 @@ function movieInfo(movieTitle) {
     }
 }
 
+
+//spotify-this-song
 function songInfo(songTitle) {
     spotify.search({
         type: 'track',
-        query: songTitle,
+        query: songTitle,//use a string
         limit: 1
-    }).then(function(response){
-        console.log(JSON.stringify(response,null,2))
-    }).catch(function(err){
+    }).then(function (response) {
+        console.log(JSON.stringify(response, null, 2))
+    }).catch(function (err) {
         console.log(err);
     })
 }
 
+//do-what-it-says
 
+function doIt() {
+    fs.readFile('./random.txt', 'utf8', function (err, data) {
+        if (err) {
+            console.log(err)
+        }
 
+        console.log(data)
+        var commands = data.split('\r\n')
+        console.log(commands)
+
+        commands.forEach(function (command) {
+
+            //var actions = [];
+            var keyAction = command.split(',');
+
+            var action = keyAction[1]
+            action = action.replace(/"/g,'')
+            //console.log(action)
+
+            switch (keyAction[0]) {
+                case 'spotify-this-song': songInfo(action)
+
+                    break;
+
+                case 'movie-this': movieInfo(action)
+
+                    break;
+
+                case 'concert-this': concert(action)
+
+                    break;
+
+                default:
+                    break;
+            }
+
+        })
+    })
+}
+
+doIt()
+
+//concert('panic at the disco')
 
