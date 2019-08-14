@@ -100,7 +100,7 @@ function songInfo(songTitle) {
     spotify.search({
         type: 'track',
         query: songTitle,
-        limit: 5
+        limit: 1
     }).then(function(response){
         console.log(JSON.stringify(response,null,2))
     }).catch(function(err){
