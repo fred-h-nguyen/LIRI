@@ -95,14 +95,18 @@ function movieInfo(movieTitle) {
         axios.get('http://www.omdbapi.com/?t=' + newMovieTitle + '&y=&plot=short&apikey=trilogy')
             .then(function (response) {
                 var data = response.data
-                console.log('Movie: ' + data.Title);
-                console.log('Year: ' + data.Year);
-                console.log('IMDB Rating: ' + data.Ratings[0].Value);
-                console.log('Rotten Tomatoes Rating: ' + data.Ratings[1].Value);
-                console.log('Country: ' + data.Country);
-                console.log('Language: ' + data.Language);
-                console.log('Plot: ' + data.Plot);
-                console.log('Actors: ' + data.Actors)
+                if (data.Response === "True") {
+                    console.log('Movie: ' + data.Title);
+                    console.log('Year: ' + data.Year);
+                    console.log('IMDB Rating: ' + data.Ratings[0].Value);
+                    console.log('Rotten Tomatoes Rating: ' + data.Ratings[1].Value);
+                    console.log('Country: ' + data.Country);
+                    console.log('Language: ' + data.Language);
+                    console.log('Plot: ' + data.Plot);
+                    console.log('Actors: ' + data.Actors)
+                } else {
+                    console.log('Movie Not Found')
+                }
 
             })
     }
@@ -140,7 +144,7 @@ function doIt() {
             var keyAction = command.split(',');
 
             var action = keyAction[1]
-            action = action.replace(/"/g,'')
+            action = action.replace(/"/g, '')
             //console.log(action)
 
             switch (keyAction[0]) {
@@ -164,7 +168,32 @@ function doIt() {
     })
 }
 
-doIt()
+//===========================================
+//collect args
 
-//concert('panic at the disco')
+var command = args[2]
 
+var query = args.slice(3).join(' ')
+
+//=============================================
+//Switch Case
+
+switch (command) {
+    case 'spotify-this-song': songInfo(query)
+
+        break;
+
+    case 'movie-this': movieInfo(query)
+
+        break;
+
+    case 'concert-this': concert(query)
+
+        break;
+
+    case 'do-what-it-says': doIt()
+        break;
+
+    default:
+        break;
+}
