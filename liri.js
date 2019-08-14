@@ -65,6 +65,37 @@ function concert(artist) {
 
 }
 
+function movieInfo(movieTitle) {
+    if (!movieTitle) {
+        axios.get('http://www.omdbapi.com/?t=Mr.+Nobody&y=&plot=short&apikey=trilogy')
+            .then(function (response) {
+                var data = response.data
+                console.log('Movie: ' + data.Title);
+                console.log('Year: ' + data.Year);
+                console.log('IMDB Rating: ' + data.Ratings[0].Value);
+                console.log('Rotten Tomatoes Rating: ' + data.Ratings[1].Value);
+                console.log('Country: ' + data.Country);
+                console.log('Language: ' + data.Language);
+                console.log('Plot: ' + data.Plot);
+                console.log('Actors: ' + data.Actors)
+            })
+    } else {
+        axios.get('http://www.omdbapi.com/?t=' + movieTitle + '&y=&plot=short&apikey=trilogy')
+            .then(function (response) {
+                var data = response.data
+                console.log('Movie: ' + data.Title);
+                console.log('Year: ' + data.Year);
+                console.log('IMDB Rating: ' + data.Ratings[0].Value);
+                console.log('Rotten Tomatoes Rating: ' + data.Ratings[1].Value);
+                console.log('Country: ' + data.Country);
+                console.log('Language: ' + data.Language);
+                console.log('Plot: ' + data.Plot);
+                console.log('Actors: ' + data.Actors)
+
+            })
+    }
+}
+
 
 
 
