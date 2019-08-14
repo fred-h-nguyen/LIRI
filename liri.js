@@ -96,6 +96,18 @@ function movieInfo(movieTitle) {
     }
 }
 
+function songInfo(songTitle) {
+    spotify.search({
+        type: 'track',
+        query: songTitle,
+        limit: 5
+    }).then(function(response){
+        console.log(JSON.stringify(response,null,2))
+    }).catch(function(err){
+        console.log(err);
+    })
+}
+
 
 
 
