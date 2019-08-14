@@ -19,14 +19,19 @@ function concert(artist) {
     axios.get('https://rest.bandsintown.com/artists/' + artist + '/events?app_id=codingbootcamp')
         .then(function (response) {
 
+            //console.log(response)
             var data = response.data
 
+            //console.log(data)
+
             //Name of the venue
+
+            console.log(data[0].venue.name)
 
             //Venue location
 
             //Date of the Event (use moment to format this as "MM/DD/YYYY")
-
+            console.log(moment(data[0].datetime).format('MM/DD/YYYY'))
 
 
         })
@@ -34,4 +39,5 @@ function concert(artist) {
 
 }
 
+concert('U2')
 
