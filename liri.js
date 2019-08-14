@@ -31,33 +31,40 @@ function concert(artist) {
 
             //console.log(response)
             var data = response.data
-
             //console.log(data)
 
-            //for loop
+            if (data == false) {
+                console.log('No concert found!')
+            } else {
 
-            //for (var i = 0; i < data.length; i++) {
-            //Name of the venue
+                //for loop
 
-            console.log(data[0].venue.name)
+                //for (var i = 0; i < data.length; i++) {
 
-            //Venue location
-            var coordinates = { lat: data[0].venue.latitude, lon: data[0].venue.longitude }
+                //Date of the Event(use moment to format this as "MM/DD/YYYY")
+                console.log('The concert will play on the date of ' + moment(data[0].datetime).format('MM/DD/YYYY'))
 
-            geocoder.reverse(coordinates).then(function (res) {
-                console.log(res[0].formattedAddress);
-            }).catch(function (err) {
-                console.log(err);
-            })
 
-            //Date of the Event (use moment to format this as "MM/DD/YYYY")
-            console.log(moment(data[0].datetime).format('MM/DD/YYYY'))
-            //}
+                //Name of the venue
+
+                console.log('The concert is playing at ' + data[0].venue.name)
+
+                //Venue location
+                var coordinates = { lat: data[0].venue.latitude, lon: data[0].venue.longitude }
+
+                geocoder.reverse(coordinates).then(function (res) {
+                    console.log('The address is at ' + res[0].formattedAddress);
+                }).catch(function (err) {
+                    console.log(err);
+                })
+                //}
+            }
 
         })
 
 
 }
+
 
 
 
