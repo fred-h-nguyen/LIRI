@@ -17,9 +17,9 @@ var NodeGeocoder = require('node-geocoder');
 var options = {
     provider: "mapquest",
     apiKey: "VcPyAXvCwBFq4OMnuzJgcZCVdX3GVsGg"
-  };
-  
-  var geocoder = NodeGeocoder(options);
+};
+
+var geocoder = NodeGeocoder(options);
 
 // process.argv to get commands
 var args = process.argv;
@@ -34,20 +34,30 @@ function concert(artist) {
 
             //console.log(data)
 
+            //for loop
+
+            //for (var i = 0; i < data.length; i++) {
             //Name of the venue
 
             console.log(data[0].venue.name)
 
             //Venue location
+            var coordinates = { lat: data[0].venue.latitude, lon: data[0].venue.longitude }
+
+            geocoder.reverse(coordinates).then(function (res) {
+                console.log(res[0].formattedAddress);
+            }).catch(function (err) {
+                console.log(err);
+            })
 
             //Date of the Event (use moment to format this as "MM/DD/YYYY")
             console.log(moment(data[0].datetime).format('MM/DD/YYYY'))
-
+            //}
 
         })
 
 
 }
 
-concert('U2')
+
 
