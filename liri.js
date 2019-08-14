@@ -11,6 +11,16 @@ var spotify = new Spotify(keys.spotify);
 //moment used to get time for concerts
 var moment = require('moment');
 
+//
+var NodeGeocoder = require('node-geocoder');
+
+var options = {
+    provider: "mapquest",
+    apiKey: "VcPyAXvCwBFq4OMnuzJgcZCVdX3GVsGg"
+  };
+  
+  var geocoder = NodeGeocoder(options);
+
 // process.argv to get commands
 var args = process.argv;
 
