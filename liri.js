@@ -79,13 +79,21 @@ function movieInfo(movieTitle) {
         axios.get('http://www.omdbapi.com/?t=Mr.+Nobody&y=&plot=short&apikey=trilogy')
             .then(function (response) {
                 var data = response.data
+                //movie title
                 console.log('Movie: ' + data.Title);
+                //year
                 console.log('Year: ' + data.Year);
+                //imdb rating
                 console.log('IMDB Rating: ' + data.Ratings[0].Value);
+                //rotten tomatoes rating
                 console.log('Rotten Tomatoes Rating: ' + data.Ratings[1].Value);
+                //country of origin
                 console.log('Country: ' + data.Country);
+                //language of movie
                 console.log('Language: ' + data.Language);
+                //plot
                 console.log('Plot: ' + data.Plot);
+                //actors
                 console.log('Actors: ' + data.Actors)
             })
     } else {
@@ -96,13 +104,22 @@ function movieInfo(movieTitle) {
             .then(function (response) {
                 var data = response.data
                 if (data.Response === "True") {
+                    var data = response.data
+                    //movie title
                     console.log('Movie: ' + data.Title);
+                    //year
                     console.log('Year: ' + data.Year);
+                    //imdb rating
                     console.log('IMDB Rating: ' + data.Ratings[0].Value);
+                    //rotten tomatoes rating
                     console.log('Rotten Tomatoes Rating: ' + data.Ratings[1].Value);
+                    //country of origin
                     console.log('Country: ' + data.Country);
+                    //language of movie
                     console.log('Language: ' + data.Language);
+                    //plot
                     console.log('Plot: ' + data.Plot);
+                    //actors
                     console.log('Actors: ' + data.Actors)
                 } else {
                     console.log('Movie Not Found')
@@ -115,15 +132,52 @@ function movieInfo(movieTitle) {
 
 //spotify-this-song
 function songInfo(songTitle) {
-    spotify.search({
-        type: 'track',
-        query: songTitle,//use a string
-        limit: 1
-    }).then(function (response) {
-        console.log(JSON.stringify(response, null, 2))
-    }).catch(function (err) {
-        console.log(err);
-    })
+
+    if (!songTitle) {
+        spotify.search({
+            type: 'track',
+            query: 'The Sign Ace of Base',//use a string
+            limit: 1
+        }).then(function (response) {
+
+            //console.log(JSON.stringify(response, null, 2))
+            //name of song
+            console.log(response.tracks.items[0].name)
+
+            //artist
+            console.log('Artist: ' + response.tracks.items[0].artists[0].name)
+
+            //album
+            console.log('Album: ' + response.tracks.items[0].album.name)
+
+            //external link to web spotify
+            console.log('Link to the song: ' + response.tracks.items[0].external_urls.spotify)
+        }).catch(function (err) {
+            console.log(err);
+        })
+    } else {
+        spotify.search({
+            type: 'track',
+            query: songTitle,//use a string
+            limit: 1
+        }).then(function (response) {
+
+            //console.log(JSON.stringify(response, null, 2))
+            //name of song
+            console.log(response.tracks.items[0].name)
+
+            //artist
+            console.log('Artist: ' + response.tracks.items[0].artists[0].name)
+
+            //album
+            console.log('Album: ' + response.tracks.items[0].album.name)
+
+            //external link to web spotify
+            console.log('Link to the song: ' + response.tracks.items[0].external_urls.spotify)
+        }).catch(function (err) {
+            console.log(err);
+        })
+    }
 }
 
 //do-what-it-says
